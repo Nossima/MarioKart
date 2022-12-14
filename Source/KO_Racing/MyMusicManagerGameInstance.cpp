@@ -2,40 +2,60 @@
 
 
 #include "MyMusicManagerGameInstance.h"
+#include "Async/Async.h"
 
 void UMyMusicManagerGameInstance::Init()
 {
-	/*AudioSrc = CreateDefaultSubobject<UAudioComponent>(TEXT("AudioSrc"));
-	AudioSrc->bAutoActivate = false;
-	AudioSrc->bAutoDestroy = false;
-	AudioSrc->bAllowSpatialization = false;
-	AudioSrc->OnAudioFinished.AddDynamic(this, &UMyMusicManagerGameInstance::PlayNextSong);*/
-	LastIDPlayed = -1;
-	ShouldPlay = false;
+	_LastIDPlayed = -1;
+	_ShouldPlay = false;
 }
 
-void UMyMusicManagerGameInstance::SetupList(std::vector<USoundCue*> songList)
+void UMyMusicManagerGameInstance::SetupSrc(UAudioComponent* BGMSrc)
 {
-	SongList = songList;
+	_AudioSrc = BGMSrc;
+	/*_AudioSrc->bAutoActivate = false;
+	_AudioSrc->bAutoDestroy = false;
+	_AudioSrc->bAllowSpatialization = false;
+	_AudioSrc->bIsMusic = true;
+	_AudioSrc->OnAudioFinished.AddDynamic(this, &UMyMusicManagerGameInstance::PlayNextSong);*/
+}
+
+void UMyMusicManagerGameInstance::SetupList(TArray<USoundCue*> songList)
+{
+	_SongList = songList;
+	ShuffleSongList();
 }
 
 void UMyMusicManagerGameInstance::Run()
 {
-	ShouldPlay = true;
-	AudioSrc->SetSound(SongList[++LastIDPlayed]);
-	AudioSrc->Play();
+	_ShouldPlay = true;
+	_AudioSrc->SetSound(_SongList[++_LastIDPlayed]);
+	_AudioSrc->Play();
 }
 
 void UMyMusicManagerGameInstance::Stop()
 {
-	ShouldPlay = false;
+	_ShouldPlay = false;
 }
 
 void UMyMusicManagerGameInstance::PlayNextSong()
 {
-	if (ShouldPlay) {
-		if (LastIDPlayed == (SongList.size() - 2))
-			AudioSrc->SetSound(SongList[++LastIDPlayed]);
-		AudioSrc->Play();
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::White, TEXT("World"));
+	if (_ShouldPlay) {
+		_AudioSrc->SetSound(_SongList[++_LastIDPlayed]);
+		if (_LastIDPlayed == (_SongList.Num() - 1)) {
+			_LastIDPlayed = -1;
+			ShuffleSongList();
+		}
+		_AudioSrc->Play();
+	}
+}
+
+void UMyMusicManagerGameInstance::ShuffleSongList()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::White, TEXT("World"));
+	for (int32 i = _SongList.Num() - 1; i > 0; i--) {
+		int32 j = FMath::Floor(FMath::Rand() * (i + 1)) % _SongList.Num();
+		_SongList.Swap(i, j);
 	}
 }

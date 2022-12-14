@@ -7,6 +7,7 @@
 #include <vector>
 #include "Sound/SoundCue.h"
 #include "Components/AudioComponent.h"
+#include "Containers/Array.h"
 #include "MyMusicManagerGameInstance.generated.h"
 
 /**
@@ -27,18 +28,20 @@ public:
     virtual void Init() override;
     // End UGameInstance
 
-    void SetupList(std::vector<USoundCue*> songList);
+    void SetupSrc(UAudioComponent* BGMSrc);
+    void SetupList(TArray<USoundCue*> songList);
     void Run();
     void Stop();
+    void PlayNextSong();
+    void ShuffleSongList();
 
 private:
-    void PlayNextSong();
     // All my variables
     // Song variables
-    std::vector<USoundCue*> SongList;
-    int LastIDPlayed;
-    bool ShouldPlay;
+    TArray<USoundCue*> _SongList;
+    int _LastIDPlayed;
+    bool _ShouldPlay;
     // Audio source variables
-    UAudioComponent* AudioSrc;
+    UAudioComponent* _AudioSrc;
 	
 };

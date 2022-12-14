@@ -4,8 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include <vector>
+//#include <vector>
 #include "Sound/SoundCue.h"
+#include "Containers/Array.h"
 #include "MyMusicManagerSetUpper.generated.h"
 
 UCLASS()
@@ -16,6 +17,13 @@ class KO_RACING_API AMyMusicManagerSetUpper : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AMyMusicManagerSetUpper();
+
+	void Test();
+
+	UPROPERTY(Category = BGM, EditAnywhere)
+		TArray<USoundCue*> _SongList;
+	UPROPERTY(Category = BGM, EditAnywhere)
+		class UAudioComponent *_BGMSrc;
 
 protected:
 	// Called when the game starts or when spawned
