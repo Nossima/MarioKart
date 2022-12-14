@@ -18,8 +18,6 @@ public:
 	// Sets default values for this actor's properties
 	AMyMusicManagerSetUpper();
 
-	void Test();
-
 	UPROPERTY(Category = BGM, EditAnywhere)
 		TArray<USoundCue*> _SongList;
 	UPROPERTY(Category = BGM, EditAnywhere)

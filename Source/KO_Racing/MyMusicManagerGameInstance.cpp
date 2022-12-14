@@ -3,6 +3,7 @@
 
 #include "MyMusicManagerGameInstance.h"
 #include "Async/Async.h"
+#include "GenericPlatform/GenericPlatformProcess.h"
 
 void UMyMusicManagerGameInstance::Init()
 {
@@ -13,11 +14,11 @@ void UMyMusicManagerGameInstance::Init()
 void UMyMusicManagerGameInstance::SetupSrc(UAudioComponent* BGMSrc)
 {
 	_AudioSrc = BGMSrc;
-	/*_AudioSrc->bAutoActivate = false;
+	_AudioSrc->bAutoActivate = false;
 	_AudioSrc->bAutoDestroy = false;
 	_AudioSrc->bAllowSpatialization = false;
 	_AudioSrc->bIsMusic = true;
-	_AudioSrc->OnAudioFinished.AddDynamic(this, &UMyMusicManagerGameInstance::PlayNextSong);*/
+	//_AudioSrc->OnAudioFinished.AddDynamic(this, &UMyMusicManagerGameInstance::PlayNextSong);
 }
 
 void UMyMusicManagerGameInstance::SetupList(TArray<USoundCue*> songList)
@@ -31,6 +32,19 @@ void UMyMusicManagerGameInstance::Run()
 	_ShouldPlay = true;
 	_AudioSrc->SetSound(_SongList[++_LastIDPlayed]);
 	_AudioSrc->Play();
+	AsyncTask(ENamedThreads::AnyThread, [this]() {
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::White, TEXT("Test World"));
+		while (_ShouldPlay)
+			FPlatformProcess::Sleep(10);
+			if (_AudioSrc->IsPlaying()) {
+				_AudioSrc->SetSound(_SongList[++_LastIDPlayed]);
+				if (_LastIDPlayed == (_SongList.Num() - 1)) {
+					_LastIDPlayed = -1;
+					ShuffleSongList();
+				}
+				_AudioSrc->Play();
+			}
+	});
 }
 
 void UMyMusicManagerGameInstance::Stop()

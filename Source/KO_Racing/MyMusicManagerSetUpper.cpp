@@ -13,18 +13,12 @@ AMyMusicManagerSetUpper::AMyMusicManagerSetUpper()
 
 }
 
-void AMyMusicManagerSetUpper::Test()
-{
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::White, TEXT("Test"));
-}
-
 // Called when the game starts or when spawned
 void AMyMusicManagerSetUpper::BeginPlay()
 {
 	Super::BeginPlay();
 	_BGMSrc = FindComponentByClass<UAudioComponent>();
-	//_BGMSrc->OnAudioFinished.AddDynamic(this, AMyMusicManagerSetUpper::Test);
-	//_BGMSrc->OnAudioFinishedNative.AddUObject(this, &AMyMusicManagerSetUpper::Test);
+	//UMyMusicManagerGameSubsystem *GI = GEngine->GetEngineSubsystem<UMyMusicManagerGameSubsystem>();
 	UMyMusicManagerGameInstance *GI = Cast<UMyMusicManagerGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
 	GI->SetupSrc(_BGMSrc);
 	GI->SetupList(_SongList);

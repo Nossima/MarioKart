@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "Engine/GameInstance.h"
-#include <vector>
 #include "Sound/SoundCue.h"
 #include "Components/AudioComponent.h"
 #include "Containers/Array.h"
