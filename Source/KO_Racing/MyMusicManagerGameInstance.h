@@ -38,6 +38,7 @@ private:
     // All my variables
     // Song variables
     TArray<USoundCue*> _SongList;
+    USoundCue* _CurrentSong;
     int _LastIDPlayed;
     bool _ShouldPlay;
     // Audio source variables

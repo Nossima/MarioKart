@@ -30,20 +30,23 @@ void UMyMusicManagerGameInstance::SetupList(TArray<USoundCue*> songList)
 void UMyMusicManagerGameInstance::Run()
 {
 	_ShouldPlay = true;
-	_AudioSrc->SetSound(_SongList[++_LastIDPlayed]);
-	_AudioSrc->Play();
+	_CurrentSong = _SongList[++_LastIDPlayed];
+	_AudioSrc->SetSound(_CurrentSong);
+	_AudioSrc->Play(0);
 	AsyncTask(ENamedThreads::AnyThread, [this]() {
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::White, TEXT("Test World"));
-		while (_ShouldPlay)
-			FPlatformProcess::Sleep(10);
-			if (_AudioSrc->IsPlaying()) {
-				_AudioSrc->SetSound(_SongList[++_LastIDPlayed]);
-				if (_LastIDPlayed == (_SongList.Num() - 1)) {
-					_LastIDPlayed = -1;
-					ShuffleSongList();
-				}
-				_AudioSrc->Play();
+		FPlatformProcess::Sleep(_CurrentSong->Duration);
+		PlayNextSong();
+		while (_ShouldPlay) {
+			_CurrentSong = _SongList[++_LastIDPlayed];
+			_AudioSrc->SetSound(_CurrentSong);
+			if (_LastIDPlayed == (_SongList.Num() - 1)) {
+				_LastIDPlayed = -1;
+				ShuffleSongList();
 			}
+			_AudioSrc->Play(0);
+			FPlatformProcess::Sleep(_CurrentSong->Duration);
+		}
 	});
 }
 
