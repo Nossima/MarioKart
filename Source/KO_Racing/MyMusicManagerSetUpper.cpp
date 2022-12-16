@@ -17,12 +17,12 @@ AMyMusicManagerSetUpper::AMyMusicManagerSetUpper()
 void AMyMusicManagerSetUpper::BeginPlay()
 {
 	Super::BeginPlay();
-	_BGMSrc = FindComponentByClass<UAudioComponent>();
+	/*_BGMSrc = FindComponentByClass<UAudioComponent>();
 	//UMyMusicManagerGameSubsystem *GI = GEngine->GetEngineSubsystem<UMyMusicManagerGameSubsystem>();
 	UMyMusicManagerGameInstance *GI = Cast<UMyMusicManagerGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
 	GI->SetupSrc(_BGMSrc);
 	GI->SetupList(_SongList);
-	GI->Run();
+	GI->Run();*/
 }
 
 // Called every frame

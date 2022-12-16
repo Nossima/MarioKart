@@ -27,21 +27,29 @@ public:
     virtual void Init() override;
     // End UGameInstance
 
-    void SetupSrc(UAudioComponent* BGMSrc);
-    void SetupList(TArray<USoundCue*> songList);
-    void Run();
-    void Stop();
-    void PlayNextSong();
-    void ShuffleSongList();
+    UFUNCTION(BlueprintCallable)
+        void SetupList(TArray<USoundCue*> songList);
+    UFUNCTION(BlueprintCallable)
+        void InitRadio();
+    UFUNCTION(BlueprintCallable)
+        void StopRadio();
+    UFUNCTION(BlueprintCallable)
+        void PlayNextSong();
+    UFUNCTION(BlueprintCallable)
+        void ShuffleSongList();
+
+    // All my variables
+    UPROPERTY(Category = Song, EditAnywhere, BlueprintReadWrite)
+        TArray<USoundCue*> _SongList;
+    UPROPERTY(Category = Song, EditAnywhere, BlueprintReadWrite)
+        USoundCue* _CurrentSong;
+    UPROPERTY(Category = Speaker, EditAnywhere, BlueprintReadWrite)
+        int _LastIDPlayed;
+    UPROPERTY(Category = Speaker, EditAnywhere, BlueprintReadWrite)
+        bool _ShouldPlay;
+    UPROPERTY(Category = Speaker, EditAnywhere, BlueprintReadWrite)
+        UAudioComponent* _AudioSrc;
 
 private:
-    // All my variables
-    // Song variables
-    TArray<USoundCue*> _SongList;
-    USoundCue* _CurrentSong;
-    int _LastIDPlayed;
-    bool _ShouldPlay;
-    // Audio source variables
-    UAudioComponent* _AudioSrc;
 	
 };
