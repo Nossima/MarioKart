@@ -2,11 +2,8 @@
 
 
 #include "MyMusicManagerGameInstance.h"
-#include "Async/Async.h"
 #include "GenericPlatform/GenericPlatformProcess.h"
 #include <string>
-#include <thread>
-#include <future>
 #include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 
 /*void Test(UMyMusicManagerGameInstance* UMMMGI)
@@ -66,7 +63,7 @@ void UMyMusicManagerGameInstance::PlayNextSong()
 		ShuffleSongList();
 	}
 	_AudioSrc = UGameplayStatics::CreateSound2D(this, _CurrentSong, 1.000000, 1.000000, 0.000000, ((USoundConcurrency*)nullptr), true, true);
-	_AudioSrc->OnAudioFinished.AddDynamic(this, &UMyMusicManagerGameInstance::PlayNextSong);
+	//_AudioSrc->OnAudioFinished.AddDynamic(this, &UMyMusicManagerGameInstance::PlayNextSong);
 	_AudioSrc->Play(0);
 }
 
