@@ -2,7 +2,6 @@
 
 
 #include "MyTextBlockRotator.h"
-#include <string>
 
 
 bool UMyTextBlockRotator::RotateText(float deltaTime)
@@ -41,7 +40,7 @@ void UMyTextBlockRotator::InitClass(int spaceToAdd, float timerMax, int displayL
 void UMyTextBlockRotator::InitString(FString textToAssign)
 {
 	_currentString = std::string(TCHAR_TO_UTF8(*textToAssign));
-	ReplaceAll(_currentString, "__Cue", "");
+	ReplaceAll(_currentString, "Cue", "");
 	ReplaceAll(_currentString, "_", " ");
 	_currentString.append(_spaceToAdd, ' ');
 }

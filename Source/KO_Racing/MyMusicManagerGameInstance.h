@@ -4,9 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "Engine/GameInstance.h"
+
 #include "Sound/SoundCue.h"
 #include "Components/AudioComponent.h"
 #include "Containers/Array.h"
+#include "MySaveSetting.h"
+
 #include "MyMusicManagerGameInstance.generated.h"
 
 /**
@@ -25,6 +28,7 @@ public:
 
     // Begin UGameInstance
     virtual void Init() override;
+    virtual void Shutdown() override;
     // End UGameInstance
 
     UFUNCTION(BlueprintCallable)
@@ -32,23 +36,36 @@ public:
     UFUNCTION(BlueprintCallable)
         void InitRadio();
     UFUNCTION(BlueprintCallable)
+
         void StopRadio();
     UFUNCTION(BlueprintCallable)
         void PlayNextSong();
     UFUNCTION(BlueprintCallable)
         void ShuffleSongList();
 
+    UFUNCTION(BlueprintCallable)
+        void ChangeMusicVolume(float value);
+    UFUNCTION(BlueprintCallable)
+        void ChangeFXVolume(float value);
+
+    UFUNCTION(BlueprintCallable)
+        void SaveSetting();
+    UFUNCTION(BlueprintCallable)
+        void LoadSetting();
+
     // All my variables
     UPROPERTY(Category = Song, EditAnywhere, BlueprintReadWrite)
-        TArray<USoundCue*> _SongList;
+        TArray<USoundCue*> _songList;
     UPROPERTY(Category = Song, EditAnywhere, BlueprintReadWrite)
-        USoundCue* _CurrentSong;
+        USoundCue* _currentSong;
     UPROPERTY(Category = Speaker, EditAnywhere, BlueprintReadWrite)
-        int _LastIDPlayed;
+        int _lastIDPlayed;
     UPROPERTY(Category = Speaker, EditAnywhere, BlueprintReadWrite)
-        bool _ShouldPlay;
+        bool _shouldPlay;
     UPROPERTY(Category = Speaker, EditAnywhere, BlueprintReadWrite)
-        UAudioComponent* _AudioSrc;
+        UAudioComponent* _audioSrc;
+    UPROPERTY(Category = Setting, EditAnywhere, BlueprintReadWrite)
+        UMySaveSetting *_setting;
 
 private:
 	

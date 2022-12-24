@@ -2,9 +2,11 @@
 
 #pragma once
 
-#include <string>
 #include "CoreMinimal.h"
+
+#include <string>
 #include "Components/TextBlock.h"
+
 #include "MyTextBlockRotator.generated.h"
 
 /**
