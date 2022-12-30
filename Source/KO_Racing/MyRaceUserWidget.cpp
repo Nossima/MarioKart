@@ -8,9 +8,16 @@ void UMyRaceUserWidget::ChangeRankValue(float value)
 	_rankTxt->ChangeValue(value);
 }
 
-void UMyRaceUserWidget::ChangeLapValue(float value)
+void UMyRaceUserWidget::AddLap()
 {
-	_lapTxt->ChangeValue(value);
+	_lapTxt->ChangeValue(_lapTxt->_currentVal + 1);
+	_lapTime.Add(_timer - _lastLapTimer);
+	_lastLapTimer = _timer;
+}
+
+void UMyRaceUserWidget::SetLapMax(float value)
+{
+	_lapTxt->_valMax = value;
 }
 
 void UMyRaceUserWidget::ChangeSpeedValue(float value)
@@ -27,19 +34,41 @@ void UMyRaceUserWidget::StartTimer()
 void UMyRaceUserWidget::StopTimer()
 {
 	_timerIsStarted = false;
+	_lapTime.Add(_timer - _lastLapTimer);
+	_lastLapTimer = _timer;
+}
+
+void UMyRaceUserWidget::PauseTimer()
+{
+	_timerIsStarted = false;
+}
+
+void UMyRaceUserWidget::ResumeTimer()
+{
+	_timerIsStarted = true;
 }
 
 void UMyRaceUserWidget::UpdateTimer(float deltaTime)
 {
 	if (_timerIsStarted) {
 		_timer += deltaTime;
-		_timerTxt->SetText(FText::FromString(FString(GenTimerString(_timer).c_str())));
+		_timerTxt->SetText(FText::FromString(GenTimerFString(_timer)));
 	}
 }
 
 float UMyRaceUserWidget::GetTimer()
 {
 	return _timer;
+}
+
+TArray<float> UMyRaceUserWidget::GetLapTime()
+{
+	return _lapTime;
+}
+
+FString UMyRaceUserWidget::GenTimerFString(float time)
+{
+	return FString(GenTimerString(time).c_str());
 }
 
 std::string UMyRaceUserWidget::GenTimerString(float time)

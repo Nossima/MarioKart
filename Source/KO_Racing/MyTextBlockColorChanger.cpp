@@ -19,9 +19,9 @@ void UMyTextBlockColorChanger::ChangeValue(float value)
 		color = MixColor(_colorLow, _colorMid, (_currentVal / maxHalf));
 	else if (_currentVal == maxHalf)
 		color = _colorMid;
-	else if (_currentVal < _valMax) {
+	else if (_currentVal < _valMax)
 		color = MixColor(_colorMid, _colorHigh, ((_currentVal - maxHalf) / maxHalf));
-	} else
+	else
 		color = _colorHigh;
 	SetText(FText::FromString(FString::FromInt((int)_currentVal)));
 	SetColorAndOpacity(FSlateColor(color));

@@ -23,7 +23,9 @@ public:
     UFUNCTION(BlueprintCallable)
         void ChangeRankValue(float value);
     UFUNCTION(BlueprintCallable)
-        void ChangeLapValue(float value);
+        void AddLap();
+    UFUNCTION(BlueprintCallable)
+        void SetLapMax(float value);
     UFUNCTION(BlueprintCallable)
         void ChangeSpeedValue(float value);
     UFUNCTION(BlueprintCallable)
@@ -31,9 +33,17 @@ public:
     UFUNCTION(BlueprintCallable)
         void StopTimer();
     UFUNCTION(BlueprintCallable)
+        void PauseTimer();
+    UFUNCTION(BlueprintCallable)
+        void ResumeTimer();
+    UFUNCTION(BlueprintCallable)
         void UpdateTimer(float deltaTime);
     UFUNCTION(BlueprintCallable)
         float GetTimer();
+    UFUNCTION(BlueprintCallable)
+        TArray<float> GetLapTime();
+    UFUNCTION(BlueprintCallable)
+        static FString GenTimerFString(float time);
 
     // All my variables
     UPROPERTY(Category = TextColorChanger, EditAnywhere, BlueprintReadWrite)
@@ -49,4 +59,6 @@ protected:
 
     float _timer;
     bool _timerIsStarted;
+    TArray<float> _lapTime;
+    float _lastLapTimer = 0;
 };
