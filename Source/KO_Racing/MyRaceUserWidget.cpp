@@ -3,6 +3,18 @@
 
 #include "MyRaceUserWidget.h"
 
+#include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
+
+void UMyRaceUserWidget::Init()
+{
+	_speedTxt->ChangeValue(0);
+	_rankTxt->ChangeValue(0);
+	_lapTxt->ChangeValue(1);
+	SetLapMax(3);
+	_beforeStartTimerTxt->ChangeValue(3);
+	_pauseTxt->SetVisibility(ESlateVisibility::Hidden);
+}
+
 void UMyRaceUserWidget::ChangeRankValue(float value)
 {
 	_rankTxt->ChangeValue(value);
@@ -28,6 +40,7 @@ void UMyRaceUserWidget::ChangeSpeedValue(float value)
 void UMyRaceUserWidget::StartTimer()
 {
 	_timer = 0;
+	_beforeStart = 4;
 	_timerIsStarted = true;
 }
 
@@ -51,8 +64,15 @@ void UMyRaceUserWidget::ResumeTimer()
 void UMyRaceUserWidget::UpdateTimer(float deltaTime)
 {
 	if (_timerIsStarted) {
-		_timer += deltaTime;
-		_timerTxt->SetText(FText::FromString(GenTimerFString(_timer)));
+		if (_beforeStart <= 0) {
+			_timer += deltaTime;
+			_timerTxt->SetText(FText::FromString(GenTimerFString(_timer)));
+		} else {
+			_beforeStart -= deltaTime;
+			_beforeStartTimerTxt->ChangeValue(_beforeStart);
+			if (_beforeStart <= 0)
+				_raceAsStarted = true;
+		}
 	}
 }
 
@@ -69,6 +89,14 @@ TArray<float> UMyRaceUserWidget::GetLapTime()
 FString UMyRaceUserWidget::GenTimerFString(float time)
 {
 	return FString(GenTimerString(time).c_str());
+}
+
+void UMyRaceUserWidget::TogglePause()
+{
+	_isPaused = !_isPaused;
+	_pauseTxt->SetVisibility((_isPaused) ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
+	(_isPaused) ? ResumeTimer() : PauseTimer();
+	UGameplayStatics::SetGamePaused(GetWorld(), _isPaused);
 }
 
 std::string UMyRaceUserWidget::GenTimerString(float time)
