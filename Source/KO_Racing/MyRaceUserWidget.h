@@ -74,5 +74,4 @@ protected:
     bool _timerIsStarted = false;
     TArray<float> _lapTime;
     float _lastLapTimer = 0;
-    bool _pauseWaitKeyRelease = false;
 };
