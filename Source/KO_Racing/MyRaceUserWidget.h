@@ -21,6 +21,8 @@ class KO_RACING_API UMyRaceUserWidget : public UUserWidget
 	
 public:
     UFUNCTION(BlueprintCallable)
+        void Init();
+    UFUNCTION(BlueprintCallable)
         void ChangeRankValue(float value);
     UFUNCTION(BlueprintCallable)
         void AddLap();
@@ -44,6 +46,8 @@ public:
         TArray<float> GetLapTime();
     UFUNCTION(BlueprintCallable)
         static FString GenTimerFString(float time);
+    UFUNCTION(BlueprintCallable)
+        void TogglePause();
 
     // All my variables
     UPROPERTY(Category = TextColorChanger, EditAnywhere, BlueprintReadWrite)
@@ -54,11 +58,20 @@ public:
         UMyTextBlockColorChanger *_speedTxt;
     UPROPERTY(Category = Text, EditAnywhere, BlueprintReadWrite)
         UTextBlock *_timerTxt;
+    UPROPERTY(Category = TextColorChanger, EditAnywhere, BlueprintReadWrite)
+        UMyTextBlockColorChanger* _beforeStartTimerTxt;
+    UPROPERTY(Category = ForExternalUse, EditAnywhere, BlueprintReadWrite)
+        bool _raceAsStarted;
+    UPROPERTY(Category = ForExternalUse, EditAnywhere, BlueprintReadWrite)
+        bool _isPaused = false;
+    UPROPERTY(Category = Text, EditAnywhere, BlueprintReadWrite)
+        UTextBlock* _pauseTxt;
 protected:
     static std::string GenTimerString(float time);
 
-    float _timer;
-    bool _timerIsStarted;
+    float _timer = 0;
+    float _beforeStart = 3;
+    bool _timerIsStarted = false;
     TArray<float> _lapTime;
     float _lastLapTimer = 0;
 };
