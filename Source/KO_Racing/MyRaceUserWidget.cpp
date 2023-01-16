@@ -41,7 +41,7 @@ void UMyRaceUserWidget::ChangeSpeedValue(float value)
 void UMyRaceUserWidget::StartTimer()
 {
 	_timer = 0;
-	_beforeStart = 4;
+	_beforeStart = 3;
 	_timerIsStarted = true;
 }
 
@@ -70,9 +70,11 @@ void UMyRaceUserWidget::UpdateTimer(float deltaTime)
 			_timerTxt->SetText(FText::FromString(GenTimerFString(_timer)));
 		} else {
 			_beforeStart -= deltaTime;
-			_beforeStartTimerTxt->ChangeValue(_beforeStart);
-			if (_beforeStart <= 0)
+			_beforeStartTimerTxt->ChangeValue(_beforeStart + 1);
+			if (_beforeStart <= 0) {
 				_raceAsStarted = true;
+				_beforeStartTimerTxt->SetVisibility(ESlateVisibility::Hidden);
+			}
 		}
 	}
 }

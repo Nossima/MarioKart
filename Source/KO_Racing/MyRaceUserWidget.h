@@ -70,7 +70,7 @@ protected:
     static std::string GenTimerString(float time);
 
     float _timer = 0;
-    float _beforeStart = 4;
+    float _beforeStart = 3;
     bool _timerIsStarted = false;
     TArray<float> _lapTime;
     float _lastLapTimer = 0;
