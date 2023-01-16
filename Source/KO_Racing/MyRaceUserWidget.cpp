@@ -93,10 +93,27 @@ FString UMyRaceUserWidget::GenTimerFString(float time)
 
 void UMyRaceUserWidget::TogglePause()
 {
-	_isPaused = !_isPaused;
-	_pauseTxt->SetVisibility((_isPaused) ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
-	(_isPaused) ? ResumeTimer() : PauseTimer();
-	UGameplayStatics::SetGamePaused(GetWorld(), _isPaused);
+	APlayerController* PC = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, (nullptr != PC) ? TEXT("PC found") : TEXT("PC not found"), true);
+	if (nullptr != PC) {
+		UE_LOG(LogTemp, Warning, TEXT("PC found"));
+	} else {
+		UE_LOG(LogTemp, Warning, TEXT("PC not found"));
+	}
+	
+	if (nullptr != PC && PC->IsInputKeyDown(FKey("PauseAction")) && !_pauseWaitKeyRelease) {
+
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("paused"), true);
+		UE_LOG(LogTemp, Warning, TEXT("paused"));
+		
+		_pauseWaitKeyRelease = true;
+		_isPaused = !_isPaused;
+		_pauseTxt->SetVisibility((_isPaused) ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
+		(!_isPaused) ? ResumeTimer() : PauseTimer();
+		UGameplayStatics::SetGamePaused(GetWorld(), _isPaused);
+	} else if (nullptr != PC && !PC->IsInputKeyDown(FKey("PauseAction")) && _pauseWaitKeyRelease)
+		_pauseWaitKeyRelease = false;
 }
 
 std::string UMyRaceUserWidget::GenTimerString(float time)
