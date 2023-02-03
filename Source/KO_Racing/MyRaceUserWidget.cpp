@@ -29,11 +29,13 @@ void UMyRaceUserWidget::ChangeRankValue(float value)
 
 void UMyRaceUserWidget::AddLap()
 {
-	_lapTxt->ChangeValue(_lapTxt->_currentVal + 1);
-	_lapTime.Add(_timer - _lastLapTimer);
-	_lastLapTimer = _timer;
 	if (_lapTxt->_currentVal == _lapTxt->_valMax)
 		DisplayScoreboard();
+	else {
+		_lapTxt->ChangeValue(_lapTxt->_currentVal + 1);
+		_lapTime.Add(_timer - _lastLapTimer);
+		_lastLapTimer = _timer;
+	}
 }
 
 void UMyRaceUserWidget::SetLapMax(float value)
