@@ -127,7 +127,7 @@ protected:
 	UPROPERTY(Category = Camera, EditDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccedd = "true"))
 		class UCameraComponent* Camera;
 
-	UMyRaceUserWidget* _raceHUD;
+	UMyRaceUserWidget* _raceHUD = nullptr;
 
 private:
 	FVector RespawnLocation;
