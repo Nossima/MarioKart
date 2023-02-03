@@ -9,9 +9,10 @@
 #include "Components/TextBlock.h"
 #include "Components/Image.h"
 #include <string>
-#include "VehiclePawn.h"
 
 #include "MyRaceUserWidget.generated.h"
+
+class AVehiclePawn;
 
 /**
  * 
@@ -86,6 +87,6 @@ protected:
     bool _timerIsStarted = false;
     TArray<float> _lapTime;
     float _lastLapTimer = 0;
-    AVehiclePawn* _playerPawn;
+    class AVehiclePawn* _playerPawn;
     bool _beforeStartPaused = false;
 };

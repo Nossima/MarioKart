@@ -4,8 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "WheeledVehicle.h"
-#include "MyRaceUserWidget.h"
 #include "VehiclePawn.generated.h"
+
+class UMyRaceUserWidget;
 
 /**
  *
@@ -53,7 +54,7 @@ public:
 	void increaseLap();
 	UFUNCTION(Category = Race, BlueprintCallable, BlueprintPure)
 		int getCurrentLap();
-	void SetRaceHUD(UMyRaceUserWidget* raceHUD);
+	void SetRaceHUD(class UMyRaceUserWidget* raceHUD);
 	UPROPERTY(Category = Race, EditAnywhere, BlueprintReadOnly)
 		int maxCurrentLap = 3;
 
@@ -127,7 +128,7 @@ protected:
 	UPROPERTY(Category = Camera, EditDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccedd = "true"))
 		class UCameraComponent* Camera;
 
-	UMyRaceUserWidget* _raceHUD = nullptr;
+	class UMyRaceUserWidget* _raceHUD = nullptr;
 
 private:
 	FVector RespawnLocation;

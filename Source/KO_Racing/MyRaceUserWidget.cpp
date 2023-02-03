@@ -5,6 +5,7 @@
 
 #include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 #include <iostream>
+#include "VehiclePawn.h"
 
 void UMyRaceUserWidget::Init()
 {
