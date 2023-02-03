@@ -1,8 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Engine/Engine.h"
 #include "VehiclePawn.h"
+#include "Engine/Engine.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
@@ -155,6 +155,11 @@ void AVehiclePawn::increaseLap()
 int AVehiclePawn::getCurrentLap()
 {
 	return currentLap;
+}
+
+void AVehiclePawn::SetRaceHUD(UMyRaceUserWidget* raceHUD)
+{
+	_raceHUD = raceHUD;
 }
 
 void AVehiclePawn::endGame()

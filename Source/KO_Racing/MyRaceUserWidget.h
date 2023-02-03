@@ -7,7 +7,9 @@
 
 #include "MyTextBlockColorChanger.h"
 #include "Components/TextBlock.h"
+#include "Components/Image.h"
 #include <string>
+#include "VehiclePawn.h"
 
 #include "MyRaceUserWidget.generated.h"
 
@@ -41,6 +43,8 @@ public:
     UFUNCTION(BlueprintCallable)
         void UpdateTimer(float deltaTime);
     UFUNCTION(BlueprintCallable)
+        void UpdateSpeed(float deltaTime);
+    UFUNCTION(BlueprintCallable)
         float GetTimer();
     UFUNCTION(BlueprintCallable)
         TArray<float> GetLapTime();
@@ -48,6 +52,8 @@ public:
         static FString GenTimerFString(float time);
     UFUNCTION(BlueprintCallable)
         void TogglePause();
+    UFUNCTION(BlueprintCallable)
+        void DisplayScoreboard();
 
     // All my variables
     UPROPERTY(Category = TextColorChanger, EditAnywhere, BlueprintReadWrite)
@@ -66,6 +72,12 @@ public:
         bool _isPaused = false;
     UPROPERTY(Category = Text, EditAnywhere, BlueprintReadWrite)
         UTextBlock* _pauseTxt;
+    UPROPERTY(Category = scoreboard, EditAnywhere, BlueprintReadWrite)
+        UImage* _scoreboardBackground;
+    UPROPERTY(Category = scoreboard, EditAnywhere, BlueprintReadWrite)
+        UTextBlock* _scoreboardTitle;
+    UPROPERTY(Category = scoreboard, EditAnywhere, BlueprintReadWrite)
+        UTextBlock* _scoreboardTxt;
 protected:
     static std::string GenTimerString(float time);
 
@@ -74,4 +86,6 @@ protected:
     bool _timerIsStarted = false;
     TArray<float> _lapTime;
     float _lastLapTimer = 0;
+    AVehiclePawn* _playerPawn;
+    bool _beforeStartPaused = false;
 };
