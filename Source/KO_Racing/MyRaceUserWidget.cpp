@@ -123,6 +123,7 @@ void UMyRaceUserWidget::TogglePause()
 	_pauseTxt->SetVisibility((_isPaused) ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
 	(!_isPaused) ? ResumeTimer() : PauseTimer();
 	UGameplayStatics::SetGamePaused(GetWorld(), _isPaused);
+	UGameplayStatics::GetPlayerController(GetWorld(), 0)->SetShowMouseCursor(_isPaused);
 }
 
 void UMyRaceUserWidget::DisplayScoreboard()
