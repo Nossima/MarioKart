@@ -21,7 +21,8 @@ void ADeathTriggerBox::OnOverlapBegin(AActor* OverlappedActor, AActor* OtherActo
 	if (AVehiclePawn* Vehicle = Cast<AVehiclePawn>(OtherActor))
 	{
 		Vehicle->SetActorRotation(FRotator::ZeroRotator);
-		Vehicle->SetActorLocation(Vehicle->getRespawnLocation(), false, (FHitResult*)nullptr, ETeleportType::TeleportPhysics);
+		Vehicle->SetActorLocation(respawnLocation, false, (FHitResult*)nullptr, ETeleportType::TeleportPhysics);
+		Vehicle->clearMovement();
 	}
 }
 

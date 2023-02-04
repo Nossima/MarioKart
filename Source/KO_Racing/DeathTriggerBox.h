@@ -22,6 +22,9 @@ public:
 
 	ADeathTriggerBox();
 
+	UPROPERTY(Category = Race, EditAnywhere, BlueprintReadWrite)
+		FVector respawnLocation;
+
 	UFUNCTION()
 		void OnOverlapBegin(class AActor* OverlappedActor, class AActor* OtherActor);
 	UFUNCTION()

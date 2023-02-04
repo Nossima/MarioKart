@@ -106,7 +106,7 @@ void AVehiclePawn::Lookup(float Val)
 {
 	if (Val != 0.f)
 	{
-		AddControllerPitchInput(Val);
+		AddControllerPitchInput(-Val);
 	}
 }
 
@@ -136,6 +136,19 @@ void AVehiclePawn::setRespawnLocation(FVector LocToSave)
 FVector AVehiclePawn::getRespawnLocation()
 {
 	return FVector(RespawnLocation);
+}
+
+void AVehiclePawn::clearMovement()
+{
+	if (UWheeledVehicleMovementComponent4W* Vehicle4W = CastChecked<UWheeledVehicleMovementComponent4W>(GetVehicleMovement()))
+	{
+		Vehicle4W->SetHandbrakeInput(true);
+
+		if (UPrimitiveComponent* VehicleMesh = Vehicle4W->UpdatedPrimitive)
+		{
+			VehicleMesh->SetPhysicsLinearVelocity(FVector(0, 0, 0), false);
+		}
+	}
 }
 
 void AVehiclePawn::increaseLap()

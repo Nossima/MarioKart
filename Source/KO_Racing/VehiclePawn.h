@@ -47,6 +47,7 @@ public:
 	// Respawn
 	void setRespawnLocation(FVector LocToSave);
 	FVector getRespawnLocation();
+	void clearMovement();
 
 	// Lap
 	void increaseLap();
