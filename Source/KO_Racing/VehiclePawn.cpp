@@ -1,14 +1,15 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Engine/Engine.h"
 #include "VehiclePawn.h"
+#include "Engine/Engine.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/InputComponent.h"
 #include "WheeledVehicleMovementcomponent4W.h"
 #include "Kismet/GameplayStatics.h"
+#include "MyRaceUserWidget.h"
 
 AVehiclePawn::AVehiclePawn()
 {
@@ -153,7 +154,9 @@ void AVehiclePawn::clearMovement()
 
 void AVehiclePawn::increaseLap()
 {
-	currentLap++;
+	if (_raceHUD != nullptr)
+		_raceHUD->AddLap();
+	/*currentLap++;
 	if (currentLap == 1)
 	{
 		FTimerHandle UnusedHandle;
@@ -162,12 +165,17 @@ void AVehiclePawn::increaseLap()
 	if (currentLap == maxCurrentLap)
 	{
 		endGame();
-	}
+	}*/
 }
 
 int AVehiclePawn::getCurrentLap()
 {
-	return currentLap;
+	return _raceHUD->_lapTxt->_currentVal;
+}
+
+void AVehiclePawn::SetRaceHUD(UMyRaceUserWidget* raceHUD)
+{
+	_raceHUD = raceHUD;
 }
 
 void AVehiclePawn::endGame()
