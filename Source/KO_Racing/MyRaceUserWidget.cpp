@@ -20,6 +20,7 @@ void UMyRaceUserWidget::Init()
 	_scoreboardBackground->SetVisibility(ESlateVisibility::Hidden);
 	_scoreboardTitle->SetVisibility(ESlateVisibility::Hidden);
 	_scoreboardTxt->SetVisibility(ESlateVisibility::Hidden);
+	_playerPawn->SetRaceHUD(this);
 }
 
 void UMyRaceUserWidget::ChangeRankValue(float value)

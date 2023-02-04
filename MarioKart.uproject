@@ -14,5 +14,11 @@
 				"PhysXVehicles"
 			]
 		}
+	],
+	"Plugins": [
+		{
+			"Name": "Water",
+			"Enabled": true
+		}
 	]
 }
